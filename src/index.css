@@ -1,0 +1,74 @@
+/* ===== TIPOGRAFÍAS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+/* ===== RESET + BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background-color: #ffffff;
+  color: #222;
+  font-family: 'Roboto', sans-serif; 
+  line-height: 1.5;
+}
+
+/* ===== TITULOS (Poppins) ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #222;
+}
+
+/* ===== CONTENEDOR GLOBAL ===== */
+.main-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 40px;
+  flex: 1;
+  padding-bottom: 60px;
+}
+
+/* ===== NAVBAR ===== */
+nav {
+  background-color: #EA9E3D;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+ 
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background-color: #EA9E3D;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* Modal por encima del backdrop */
+.modal {
+  z-index: 2000 !important;
+}
+
+.modal-backdrop {
+  z-index: 1500 !important;
+}
+
+/* Evitar overlay gris bloqueando clicks */
+.modal.show.d-block {
+  pointer-events: auto !important;
+}
+
+.modal-backdrop.show {
+  pointer-events: none !important;
+}
+
+
