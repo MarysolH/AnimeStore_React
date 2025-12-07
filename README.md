@@ -1,13 +1,24 @@
 # AnimeStore – Proyecto Final React 
 # Talento Tech 2025 - Comisión 25234
 
-AnimeStore es una aplicación e-commerce desarrollada como entrega final del TP. Permite visualizar productos, gestionar un carrito de compras, administrar productos mediante CRUD con MockAPI, manejar autenticación de usuarios y ofrecer una experiencia completa y responsiva.
+AnimeStore es una aplicación e-commerce. Permite visualizar productos, gestionar un carrito de compras, administrar productos mediante CRUD con MockAPI, manejar autenticación de usuarios y ofrecer una experiencia completa y responsiva.
+
+---
+## Vista previa del proyecto
+<p align="center">
+  <img src=".\src\assets\Inicio.png" width="750" alt="Vista previa del proyecto"/>
+</p>
 
 ---
 ## Links del Proyecto
 
-- **Repositorio GitHub:** _colocar URL aquí_
-- **Deploy en Vercel:** _colocar URL aquí_
+- **Repositorio GitHub:** [https://github.com/MarysolH/AnimeStore_React.git](https://github.com/MarysolH/AnimeStore_React.git)
+- **Deploy en Vercel:** [https://anime-store-react.vercel.app/](https://anime-store-react.vercel.app/)
+
+---
+## Credenciales administrador
+- **Nombre completo:** admin
+- **Email:** 1234@admin
 
 ---
 # Requerimiento #1: Gestión del Carrito y Autenticación
@@ -107,10 +118,6 @@ AnimeStore es una aplicación e-commerce desarrollada como entrega final del TP.
 - Eliminación de archivos innecesarios  
 - Estados globales optimizados  
 - Componentes reutilizables  
-
----
-## Documentación
-Este README explica instalación, ejecución y tecnologías utilizadas.  
 
 ---
 # Tecnologías y Librerías Utilizadas
