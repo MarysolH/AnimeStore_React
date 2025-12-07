@@ -202,11 +202,12 @@ export default function Productos() {
           {Array.from({ length: totalPaginas }, (_, index) => (
             <PaginadorBtn
               key={index + 1}
-              className={`btn mx-1 ${paginaActual === index + 1 ? "btn-primary" : "btn-outline-primary"}`}
+              activo={paginaActual === index + 1}
               onClick={() => cambiarPagina(index + 1)}
             >
               {index + 1}
             </PaginadorBtn>
+
           ))}
         </div>
       )}

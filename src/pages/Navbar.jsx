@@ -1,11 +1,10 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 import { useCartContext } from '../context/CartContext';
 import styled from 'styled-components';
 import { FaShoppingCart } from 'react-icons/fa';
 import CarritoModal from "../components/CarritoModal";
-
 
 function Navbar() {
   const { usuario, isAuthenticated, cerrarSesion } = useAuthContext();
@@ -22,9 +21,9 @@ function Navbar() {
     }, 100);
   };
 
-  const [abrirCarrito, setAbrirCarrito] = React.useState(false);
-  
-  React.useEffect(() => {
+  const [abrirCarrito, setAbrirCarrito] = useState(false);
+
+  useEffect(() => {
     if (abrirCarrito) {
       document.body.classList.add("modal-open");
     } else {
@@ -32,90 +31,144 @@ function Navbar() {
     }
   }, [abrirCarrito]);
 
+  // Estado para manejar el collapse del menú
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <>
       <NavbarContainer className="navbar navbar-expand-lg navbar-dark fixed-top">
         <div className="container-fluid">
-          <Logo to="/" className="navbar-brand">AnimeStore</Logo>
-          
-          <button 
-            className="navbar-toggler" 
-            type="button" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#navbarContent"
-            aria-controls="navbarContent" 
-            aria-expanded="false" 
-            aria-label="Toggle navigation"
+          <Logo 
+            to="/" 
+            className="navbar-brand"
+            onClick={() => setExpanded(false)}
+          >
+            AnimeStore
+          </Logo>
+
+          {/* Botón hamburguesa */}
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={() => setExpanded(!expanded)}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarContent">
+          {/* Contenido colapsable con la clase dinámica */}
+          <div className={`collapse navbar-collapse ${expanded ? "show" : ""}`}>
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 gap-4">
               <li className="nav-item">
-                <NavLink to="/" className="nav-link">Inicio</NavLink>
+                <NavLink 
+                  to="/" 
+                  className="nav-link"
+                  onClick={() => setExpanded(false)}
+                >
+                  Inicio
+                </NavLink>
               </li>
+
               <li className="nav-item">
-                <NavLink to="/productos" className="nav-link">Productos</NavLink>
+                <NavLink 
+                  to="/productos" 
+                  className="nav-link"
+                  onClick={() => setExpanded(false)}
+                >
+                  Productos
+                </NavLink>
               </li>
+
               <li className="nav-item">
-                <NavLink to="/servicios" className="nav-link">Servicios</NavLink>
-              </li>              
+                <NavLink 
+                  to="/servicios" 
+                  className="nav-link"
+                  onClick={() => setExpanded(false)}
+                >
+                  Servicios
+                </NavLink>
+              </li>
+
               {usuario?.nombre === "admin" && (
                 <li className="nav-item">
-                  <NavLinkAdmin to="/formulario-producto" className="nav-link">Agregar Producto</NavLinkAdmin>
+                  <NavLinkAdmin 
+                    to="/formulario-producto" 
+                    className="nav-link"
+                    onClick={() => setExpanded(false)}
+                  >
+                    Agregar Producto
+                  </NavLinkAdmin>
                 </li>
               )}
             </ul>
 
             <SeccionUsuario className="d-flex align-items-center gap-3">
-              <ContenedorCarrito> 
-                <IconoCarrito 
-                  as="button" 
-                  onClick={() => setAbrirCarrito(true)}
+              
+              {/* Carrito */}
+              <ContenedorCarrito>
+                <IconoCarrito
+                  as="button"
+                  onClick={() => {
+                    setAbrirCarrito(true);
+                    setExpanded(false);
+                  }}
                   className="nav-link d-flex align-items-center bg-transparent border-0"
                 >
-                  
-                  <FaShoppingCart />  
+                  <FaShoppingCart />
                   {totalItemsCarrito > 0 && (
-                    <ContadorCarrito>
-                      {totalItemsCarrito}
-                    </ContadorCarrito>
+                    <ContadorCarrito>{totalItemsCarrito}</ContadorCarrito>
                   )}
                 </IconoCarrito>
               </ContenedorCarrito>
 
+              {/* Usuario */}
               {isAuthenticated ? (
                 <ContenedorUsuario className="d-flex align-items-center gap-3">
                   <Bienvenida>Hola, {usuario.nombre}</Bienvenida>
-                 
+
                   {usuario.nombre === "admin" && (
-                    <NavLinkAdmin to="/dashboard" className="nav-link">Dashboard</NavLinkAdmin>
+                    <NavLinkAdmin 
+                      to="/dashboard" 
+                      className="nav-link"
+                      onClick={() => setExpanded(false)}
+                    >
+                      Dashboard
+                    </NavLinkAdmin>
                   )}
-                 
-                  <BotonCerrarSesion onClick={manejarCerrarSesion}>
+
+                  <BotonCerrarSesion onClick={() => {
+                    manejarCerrarSesion();
+                    setExpanded(false);
+                  }}>
                     Cerrar Sesión
                   </BotonCerrarSesion>
                 </ContenedorUsuario>
               ) : (
-                <NavLink to="/iniciar-sesion" className="nav-link">Iniciar Sesión</NavLink>
+                <NavLink 
+                  to="/iniciar-sesion" 
+                  className="nav-link"
+                  onClick={() => setExpanded(false)}
+                >
+                  Iniciar Sesión
+                </NavLink>
               )}
+
             </SeccionUsuario>
           </div>
         </div>
       </NavbarContainer>
+
       <NavbarSpacer />
+
       <CarritoModal 
         mostrar={abrirCarrito}
         cerrar={() => setAbrirCarrito(false)}
       />
-
     </>
-  )
-} 
+  );
+}
 
 export default Navbar;
+
 
 // ===== Styled Components =====
 const NavbarContainer = styled.nav`

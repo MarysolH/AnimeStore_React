@@ -7,11 +7,18 @@ import styled from "styled-components";
 // ===== Styled Components =====
 const DetalleRow = styled.div`
   background-color: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.15);
   margin-top: 3rem;
+
+  /* Fix overflow en mobile */
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  overflow-x: hidden;
 `;
+
 
 const SelectorCantidad = styled.div`
   display: flex;
@@ -98,11 +105,16 @@ const ProductoDetalle = () => {
             <DetalleRow className="row g-4">
                 <div className="col-md-6 d-flex justify-content-center align-items-start">
                     <img
-                        src={producto.avatar}
-                        alt={producto.nombre}
-                        className="img-fluid rounded"
-                        style={{ maxHeight: 500, objectFit: "contain" }}
+                      src={producto.avatar}
+                      alt={producto.nombre}
+                      className="img-fluid rounded"
+                      style={{
+                        maxHeight: "400px",
+                        width: "100%",
+                        objectFit: "contain"
+                      }}
                     />
+
                 </div>
                 <div className="col-md-6 d-flex flex-column">
                     <h2 className="fw-bold fs-1">{producto.nombre}</h2>

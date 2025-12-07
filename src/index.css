@@ -71,4 +71,49 @@ footer {
   pointer-events: none !important;
 }
 
+/* ===== FIX: Evitar scroll horizontal en mobile ===== */
 
+/* Previene que cualquier elemento genere ancho extra */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+}
+
+/* Asegura que el contenedor principal no se desborde */
+.main-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  overflow-x: hidden;
+}
+
+/* Bootstrap columns a veces generan fractional overflow */
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  overflow-x: hidden !important;
+}
+
+/* Mantener las columnas dentro del ancho */
+[class*="col-"] {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  box-sizing: border-box;
+}
+
+/* Fix adicional para imágenes grandes en mobile */
+img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .Toastify__toast-container {
+    z-index: 999999 !important;
+    position: fixed !important;
+  }
+
+  .Toastify__toast {
+    z-index: 999999 !important;
+  }
+}

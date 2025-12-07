@@ -47,7 +47,7 @@ const agregarAlCarrito = (producto) => {
 
   toast.success(`Producto ${producto.nombre} agregado.`, {
     theme: "dark",
-    style: { borderBottom: "4px solid #28a745" }, // línea verde
+    style: { borderBottom: "4px solid #28a745" }, 
   });
 };
 
