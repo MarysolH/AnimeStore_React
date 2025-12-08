@@ -39,7 +39,7 @@ AnimeStore es una aplicación e-commerce. Permite visualizar productos, gestiona
 - Login simulado con `localStorage`
 - Token persistido
 - Cierre de sesión con vaciado de carrito
-- Rutas protegidas (carrito, pagar, CRUD)
+- Rutas protegidas (pagar y CRUD)
 - Redirecciones automáticas para usuarios no autenticados
 
 ---

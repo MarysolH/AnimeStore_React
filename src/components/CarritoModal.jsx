@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useCartContext } from "../context/CartContext";
 
 export default function CarritoModal({ mostrar, cerrar }) {
-  const { carrito, agregarCantidad, quitarCantidad, vaciarCarrito, total } = useCartContext();
+  const { carrito, agregarCantidad, quitarCantidad, total } = useCartContext();
   const navigate = useNavigate();
 
   if (!mostrar) return null;
@@ -14,9 +14,11 @@ export default function CarritoModal({ mostrar, cerrar }) {
     navigate("/pagar", { state: { carrito } });
   };
 
+  const isMobile = window.innerWidth < 576;
+
   return ReactDOM.createPortal(
     <>
-      {/* Backdrop más bajo */}
+      {/* Backdrop */}
       <div
         style={{
           position: "fixed",
@@ -27,30 +29,21 @@ export default function CarritoModal({ mostrar, cerrar }) {
         onClick={cerrar}
       ></div>
 
-      {/* Sidebar arriba del backdrop */}
+      {/* Modal */}
       <div
         style={{
           position: "fixed",
           top: 0,
           right: 0,
-          width: "500px",
-          maxWidth: "100%",           
-          height: "100vh",
+          width: isMobile ? "100%" : "500px",
+          maxWidth: "100%",
+          maxHeight: isMobile ? "90vh" : "100vh",
           backgroundColor: "white",
           boxShadow: "-2px 0 10px rgba(0,0,0,0.2)",
           zIndex: 1060,
           display: "flex",
           flexDirection: "column",
-          padding: "20px",
-          paddingTop: "10px",
-
-          // --- RESPONSIVE ---
-          ...(window.innerWidth < 576
-            ? {
-                width: "100%",        
-                padding: "12px",      
-              }
-            : {}),
+          padding: isMobile ? "12px" : "20px",
         }}
       >
         {/* Header */}
@@ -59,10 +52,12 @@ export default function CarritoModal({ mostrar, cerrar }) {
           <button className="btn-close" onClick={cerrar}></button>
         </div>
 
-        {/* Body */}
+        {/* Body: scroll solo si excede */}
         <div
           className="modal-body"
-          style={{ overflowY: "auto", flexGrow: 1 }}
+          style={{
+            overflowY: "auto",
+          }}
         >
           {carrito.length === 0 ? (
             <p className="text-center text-muted">El carrito está vacío</p>
@@ -83,7 +78,6 @@ export default function CarritoModal({ mostrar, cerrar }) {
                     borderRadius: "6px",
                   }}
                 />
-
                 <div className="flex-grow-1">
                   <strong>{item.nombre}</strong>
                   <div className="text-muted" style={{ fontSize: "0.9rem" }}>
@@ -93,7 +87,6 @@ export default function CarritoModal({ mostrar, cerrar }) {
                     Subtotal: <strong>${(item.precio * item.cantidad).toFixed(2)}</strong>
                   </div>
                 </div>
-
                 <div className="d-flex align-items-center gap-2">
                   <button
                     className="btn btn-outline-secondary btn-sm"
@@ -114,14 +107,14 @@ export default function CarritoModal({ mostrar, cerrar }) {
           )}
         </div>
 
-        {/* Footer */}
+        {/* Footer inmediato */}
         {carrito.length > 0 && (
-          <div className="modal-footer flex-column">
+          <div className="modal-footer flex-column" style={{ flexShrink: 0 }}>
             <div className="w-100 text-end mb-2">
               <strong>Total: ${Number(total).toFixed(2)}</strong>
             </div>
             <div className="d-flex w-100 justify-content-between">
-              <button 
+              <button
                 className="btn btn-outline-secondary"
                 onClick={() => navigate("/productos")}
               >
@@ -143,4 +136,3 @@ export default function CarritoModal({ mostrar, cerrar }) {
     document.body
   );
 }
-

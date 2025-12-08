@@ -6,40 +6,79 @@ import envio from "../assets/envio.jpg";
 import especial from "../assets/especial.jpg";
 
 // ===== Styled Components =====
+const MainContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1rem;
+`;
+
+const Title = styled.h1`
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+`;
+
+const Subtitle = styled.p`
+  color: #555;
+  max-width: 700px;
+  text-align: center;
+  margin-bottom: 4rem;
+`;
+
+const CardsRow = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  justify-items: stretch;
+  align-items: stretch; /* estira todas las filas a la misma altura */
+`;
+
+const CardWrapper = styled.div`
+  width: 100%;
+`;
+
 const Card = styled.div`
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   padding: 1.5rem;
   text-align: center;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   }
 `;
 
-const CardsRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
-  width: 100%;
-  justify-items: center;
-`;
-
-const CardWrapper = styled.div`
-  width: 100%;
-  max-width: 380px; 
+// Contenedor del contenido de la card
+const CardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const ServicioImg = styled.img`
   width: 140px;
   height: 170px;
-  object-fit: contain;
+  min-height: 170px;   /* fuerza que todas las imágenes tengan la misma altura */
+  object-fit: cover;    /* mantiene proporción y evita huecos */
   border-radius: 10px;
   margin-bottom: 1rem;
+  align-self: center;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 1;
 `;
 
 const ServicioTitulo = styled.h5`
@@ -52,6 +91,14 @@ const ServicioDescripcion = styled.p`
   color: #555;
   font-size: 0.95rem;
   margin-top: 0.5rem;
+  flex-grow: 1; /* ayuda a que todas las cards tengan altura uniforme */
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 `;
 
 const VolverBtn = styled(Link)`
@@ -63,7 +110,6 @@ const VolverBtn = styled(Link)`
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.3s ease;
-  margin-top: 3rem;
 
   &:hover {
     background-color: #d6872f;
@@ -71,7 +117,7 @@ const VolverBtn = styled(Link)`
   }
 `;
 
-// ====== Componente Funcional ======
+// ===== Componente Funcional =====
 export default function Servicios() {
   const servicios = [
     {
@@ -95,27 +141,31 @@ export default function Servicios() {
   ];
 
   return (
-    <main className="main-container">
-      <div className="container text-center">
-        <h1 className="mb-3 fw-bold">Nuestros Servicios</h1>
-        <p className="text-muted mx-auto" style={{ maxWidth: "700px", marginBottom: "6rem" }}>
-          En nuestra tienda de anime te ofrecemos mucho más que productos: brindamos una experiencia completa para todos los fans.
-        </p>
+    <MainContainer>
+      <Title>Nuestros Servicios</Title>
+      <Subtitle>
+        En nuestra tienda de anime te ofrecemos mucho más que productos: brindamos una experiencia completa para todos los fans.
+      </Subtitle>
 
-        <CardsRow>
-          {servicios.map((s) => (
-            <CardWrapper key={s.id}>
-              <Card>
+      <CardsRow>
+        {servicios.map((s) => (
+          <CardWrapper key={s.id}>
+            <Card>
+              <CardContent>
                 <ServicioImg src={s.img} alt={s.titulo} />
-                <ServicioTitulo>{s.titulo}</ServicioTitulo>
-                <ServicioDescripcion>{s.descripcion}</ServicioDescripcion>
-              </Card>
-            </CardWrapper>
-          ))}
-        </CardsRow>
+                <TextWrapper>
+                  <ServicioTitulo>{s.titulo}</ServicioTitulo>
+                  <ServicioDescripcion>{s.descripcion}</ServicioDescripcion>
+                </TextWrapper>
+              </CardContent>
+            </Card>
+          </CardWrapper>
+        ))}
+      </CardsRow>
 
+      <ButtonWrapper>
         <VolverBtn to="/">Volver al Inicio</VolverBtn>
-      </div>
-    </main>
+      </ButtonWrapper>
+    </MainContainer>
   );
 }
