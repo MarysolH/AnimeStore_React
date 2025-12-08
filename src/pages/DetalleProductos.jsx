@@ -17,6 +17,12 @@ const DetalleRow = styled.div`
   margin-right: 0 !important;
   width: 100% !important;
   overflow-x: hidden;
+
+  /* Ajuste específico para móviles */
+  @media (max-width: 768px) {
+    margin-top: 1rem;      
+    padding: 1rem;        
+  }
 `;
 
 

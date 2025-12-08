@@ -34,14 +34,23 @@ export default function CarritoModal({ mostrar, cerrar }) {
           top: 0,
           right: 0,
           width: "500px",
+          maxWidth: "100%",           
           height: "100vh",
           backgroundColor: "white",
           boxShadow: "-2px 0 10px rgba(0,0,0,0.2)",
-          zIndex: 1060, // 👈 más alto que el backdrop
+          zIndex: 1060,
           display: "flex",
           flexDirection: "column",
-          padding: "30px",
+          padding: "20px",
           paddingTop: "10px",
+
+          // --- RESPONSIVE ---
+          ...(window.innerWidth < 576
+            ? {
+                width: "100%",        
+                padding: "12px",      
+              }
+            : {}),
         }}
       >
         {/* Header */}

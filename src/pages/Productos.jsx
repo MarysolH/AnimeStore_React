@@ -180,7 +180,7 @@ export default function Productos() {
                     onClick={() => manejarEliminar(producto)}
                     className="btn btn-sm flex-fill"
                     style={{
-                      backgroundColor: "#a21d1dff",  // rojo apagado
+                      backgroundColor: "#a21d1dff",  
                       color: "white",
                       fontWeight: "500",
                       border: "none"

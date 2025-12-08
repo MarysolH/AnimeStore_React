@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 import { useCartContext } from '../context/CartContext';
 import styled from 'styled-components';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import CarritoModal from "../components/CarritoModal";
 
 function Navbar() {
@@ -24,20 +24,18 @@ function Navbar() {
   const [abrirCarrito, setAbrirCarrito] = useState(false);
 
   useEffect(() => {
-    if (abrirCarrito) {
-      document.body.classList.add("modal-open");
-    } else {
-      document.body.classList.remove("modal-open");
-    }
+    if (abrirCarrito) document.body.classList.add("modal-open");
+    else document.body.classList.remove("modal-open");
   }, [abrirCarrito]);
 
-  // Estado para manejar el collapse del menú
   const [expanded, setExpanded] = useState(false);
 
   return (
     <>
       <NavbarContainer className="navbar navbar-expand-lg navbar-dark fixed-top">
         <div className="container-fluid">
+
+          {/* LOGO */}
           <Logo 
             to="/" 
             className="navbar-brand"
@@ -46,7 +44,34 @@ function Navbar() {
             AnimeStore
           </Logo>
 
-          {/* Botón hamburguesa */}
+          {/* CARRITO Y USUARIO — SIEMPRE VISIBLES EN MOBILE */}
+          <div className="d-flex align-items-center gap-3 d-lg-none">
+
+            {/* Carrito */}
+            <ContenedorCarrito>
+              <IconoCarrito
+                as="button"
+                onClick={() => {
+                  setAbrirCarrito(true);
+                  setExpanded(false);
+                }}
+                className="nav-link d-flex align-items-center bg-transparent border-0"
+              >
+                <FaShoppingCart />
+                {totalItemsCarrito > 0 && (
+                  <ContadorCarrito>{totalItemsCarrito}</ContadorCarrito>
+                )}
+              </IconoCarrito>
+            </ContenedorCarrito>
+
+            {/* Icono usuario */}
+            <Link to={isAuthenticated ? "/perfil" : "/iniciar-sesion"} className="text-white fs-4">
+              <FaUser />
+            </Link>
+
+          </div>
+
+          {/* BOTÓN HAMBURGUESA */}
           <button
             className="navbar-toggler"
             type="button"
@@ -55,35 +80,25 @@ function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          {/* Contenido colapsable con la clase dinámica */}
+          {/* MENU COLAPSABLE */}
           <div className={`collapse navbar-collapse ${expanded ? "show" : ""}`}>
+
+            {/* ITEMS DEL MENU */}
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 gap-4">
               <li className="nav-item">
-                <NavLink 
-                  to="/" 
-                  className="nav-link"
-                  onClick={() => setExpanded(false)}
-                >
+                <NavLink to="/" className="nav-link" onClick={() => setExpanded(false)}>
                   Inicio
                 </NavLink>
               </li>
 
               <li className="nav-item">
-                <NavLink 
-                  to="/productos" 
-                  className="nav-link"
-                  onClick={() => setExpanded(false)}
-                >
+                <NavLink to="/productos" className="nav-link" onClick={() => setExpanded(false)}>
                   Productos
                 </NavLink>
               </li>
 
               <li className="nav-item">
-                <NavLink 
-                  to="/servicios" 
-                  className="nav-link"
-                  onClick={() => setExpanded(false)}
-                >
+                <NavLink to="/servicios" className="nav-link" onClick={() => setExpanded(false)}>
                   Servicios
                 </NavLink>
               </li>
@@ -101,8 +116,9 @@ function Navbar() {
               )}
             </ul>
 
-            <SeccionUsuario className="d-flex align-items-center gap-3">
-              
+            {/* SECCIÓN USUARIO (SOLO DESKTOP) */}
+            <SeccionUsuario className="d-none d-lg-flex align-items-center gap-3">
+
               {/* Carrito */}
               <ContenedorCarrito>
                 <IconoCarrito
@@ -120,7 +136,6 @@ function Navbar() {
                 </IconoCarrito>
               </ContenedorCarrito>
 
-              {/* Usuario */}
               {isAuthenticated ? (
                 <ContenedorUsuario className="d-flex align-items-center gap-3">
                   <Bienvenida>Hola, {usuario.nombre}</Bienvenida>
@@ -135,24 +150,17 @@ function Navbar() {
                     </NavLinkAdmin>
                   )}
 
-                  <BotonCerrarSesion onClick={() => {
-                    manejarCerrarSesion();
-                    setExpanded(false);
-                  }}>
+                  <BotonCerrarSesion onClick={manejarCerrarSesion}>
                     Cerrar Sesión
                   </BotonCerrarSesion>
                 </ContenedorUsuario>
               ) : (
-                <NavLink 
-                  to="/iniciar-sesion" 
-                  className="nav-link"
-                  onClick={() => setExpanded(false)}
-                >
+                <NavLink to="/iniciar-sesion" className="nav-link">
                   Iniciar Sesión
                 </NavLink>
               )}
-
             </SeccionUsuario>
+
           </div>
         </div>
       </NavbarContainer>
@@ -168,6 +176,7 @@ function Navbar() {
 }
 
 export default Navbar;
+
 
 
 // ===== Styled Components =====
